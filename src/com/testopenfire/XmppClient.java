@@ -1,3 +1,5 @@
+package com.testopenfire;
+
 import org.jivesoftware.smack.*;
 import org.jivesoftware.smack.packet.Message;
 import org.jivesoftware.smack.packet.Presence;
@@ -12,9 +14,9 @@ import java.util.concurrent.ExecutionException;
  */
 public class XmppClient {
     // Задержка для таймера = 10 мин
-    private int delay = 600000;
+    private int delay = 60000;
     // порт для обращения клиента к Openfire
-    int clientPort = 4001;
+    int clientPort = 4002;
     // уникальный идентификатор данного клиента
     String usrId="";
 
@@ -137,6 +139,7 @@ public class XmppClient {
     public void sendMsg(Chat chat, String text){
         try {
             chat.sendMessage(text);
+            System.out.println("send msg: "+text);
         }
         catch (XMPPException e) {
             System.out.println("Error recieve Message : '"+text+"'\n");
@@ -168,9 +171,10 @@ public class XmppClient {
     class MyTimerTask extends TimerTask {
         @Override
         public void run() {
-
             deleteXmppClient();
             System.out.println("user -  "+ usrId +"  - delete successful\n");
+            //Thread.currentThread().interrupt();
+           //return;
         }
     }
 }

@@ -1,3 +1,8 @@
+package com.testopenfire;
+
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
@@ -8,23 +13,24 @@ public class OpenFireRest{
 
         public static String serverName = "e178dec24a3e";
         public static  String serverAddress = "217.20.149.125";
-        public static String serverPort = "4002";
+        public static String serverPort = "4001";
         //используется для авторизации при удаленном управлении пользователями OpeFire
         private static String secretKey = "EAWgo8p3";
 
-        private static final String ADD_USER_URL = "/plugins/userService/userservice?type=add&secret={secret}&username={userName}&password={userPass}&name={userName}&email={userName}";
-        private static final String DEL_USER_URL = "/plugins/userService/userservice?type=delete&secret={secret}&username={userName}";
+        private static final String ADD_USER_URL = "/plugins/userService/userservice?type=add&secret={secretKey}&username={userName}&password={userPass}&name={userName}&email={userName}";
+        private static final String DEL_USER_URL = "/plugins/userService/userservice?type=delete&secret={secretKey}&username={userName}";
 
 
         public static  String createNewUser (String userName) throws Exception {
             String userPass = generateUserPass(userName);
-
             sendAddUserRequest(userName, userPass);
+            //sendRequest(userName,userPass);
             return userName + "@" + serverName;
         }
 
         private static  void sendAddUserRequest(String userName, String userPass) throws Exception {
             RestTemplate template = new RestTemplate();
+
             String url = makeURL(ADD_USER_URL);
             try {
                 //TODO: add unmarshaler from xml to our object
@@ -32,7 +38,7 @@ public class OpenFireRest{
                 checkResponse(response);
 
             }
-            catch (RestClientException e){
+            catch (Exception e){
                 e.printStackTrace();
                 throw new Exception("erorr while connectiong to OpenFire server");
             }

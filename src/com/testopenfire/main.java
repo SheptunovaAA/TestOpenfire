@@ -1,3 +1,4 @@
+package com.testopenfire;
 /**
  * Created by Alena_Fox on 31.01.2015.
  */
@@ -14,7 +15,8 @@ import static java.lang.Thread.sleep;
 
 public class main {
     static int delay = 50000;
-    static int numberOfClients = 10;
+    static int numberOfClients = 4;
+
     public static void main(String [] argv) {
         for (int i=1;  i < numberOfClients; i=i+2) {
             final int finalI = i;
@@ -25,6 +27,7 @@ public class main {
             };
             newTread.start();
         }
+        return;
     }
 
     public static void twoClientsEmulation(int i){
